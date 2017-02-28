@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{%block content%}
+  <h1>Agregar un nuevo libro</h1>
+  <form class="" action="" method="POST">{% csrf_token %}
+    <label for="">Nuevo Libro</label>
+    {{form.as_p}}
+    <input type="submit" name="" value="Registrar Libro">
+
+  </form>
+{%endblock%}
