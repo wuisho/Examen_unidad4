@@ -1,12 +1,22 @@
 from django.shortcuts import render
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-
-from .forms import LibroAddForm
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from .forms import LibroAddForm, LibrosModelForm
 from .models import Libros
 
-
 # Create your views here.
+
+class LibrosDetailView(DetailView):
+    model = Libros
+
+class LibrosListView(ListView):
+    model = Libros
+
+    def get_queryset(self, *args, **kwargs):
+        sentencia = super(LibrosListView, self).get_queryset(**kwargs)
+        return sentencia
 
 def home(request):
 
@@ -22,6 +32,22 @@ def lista_libros(request):
     contexto= {"Mensaje": mens,
                "Libros": lib }
     return render(request, template, contexto)
+
+def actualizar(request, object_id=None):
+    #Logico de negocio alias hechizo
+    libros = get_object_or_404(Libros, id=object_id)
+    form = LibrosModelForm(request.POST or None, instance=libros)
+    if form.is_valid():
+        form.save()
+        print "Actualizacion exitosa!"
+    template = "actualizar.html"
+    contexto= {
+           "libros": libros,
+           "form":form,
+           "titulo":"Actualizar Libro"
+           }
+    return render(request, template, contexto)
+
 
 def detalle_libro(request, object_id=None):
 
