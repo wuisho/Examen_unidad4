@@ -8,21 +8,22 @@ from .models import Libros
 
 # Create your views here.
 
-class LibrosDetailView(DetailView):
-    model = Libros
-
-class LibrosListView(ListView):
-    model = Libros
-
-    def get_queryset(self, *args, **kwargs):
-        sentencia = super(LibrosListView, self).get_queryset(**kwargs)
-        return sentencia
-
 def home(request):
 
     context=locals()
     template='home.html'
     return render(request,template,context)
+
+class LibrosListView(ListView):
+    model = Libros
+
+    def get_queryset(self, *args, **kwargs):
+        setentencia = super(LibrosListView, self).get_queryset(**kwargs)
+        return sentencia
+
+class LibrosDetailView(DetailView):
+    model = Libros
+
 
 def lista_libros(request):
     lib = Libros.objects.all()
@@ -42,7 +43,7 @@ def actualizar(request, object_id=None):
         print "Actualizacion exitosa!"
     template = "actualizar.html"
     contexto= {
-           "libros": libros,
+           "libros": Libros,
            "form":form,
            "titulo":"Actualizar Libro"
            }

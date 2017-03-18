@@ -1,13 +1,14 @@
-{%extends 'base.html'%}
+{% extends "base.html" %}
 
 {%block content%}
-<h1>Libros</h1>
-<ul>
-  {%for Libros in object_list%}
-    <li>{{Libros.Nombre}} - {{Libros.Autor}} - {{Libros.Editorial}} - {{Libros.ISBN}} - {{Libros.Precio}}</li>
-  {%empty%}
-    <li>No hay libros en existencia!</li>
-  {%endfor%}
-</ul>
+  <h1>{{mensaje}}</h1>
+  <div class="">
+    <h2>{{Libros}}</h2>
+    <h2>{{Libros.Nombre}}</h2>
+    <h2>{{Libros.Autor}}</h2>
+    <h2>{{Libros.Editorial}}</h2>
+    <h2>{{Libros.ISBN}}</h2>
+    <h2>{{Libros.Precio}}</h2>
+  </div>
 
-{%endblock %}
+{%endblock%}
