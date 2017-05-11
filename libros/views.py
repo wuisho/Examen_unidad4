@@ -6,7 +6,15 @@ from django.views.generic.list import ListView
 from .forms import LibroAddForm, LibrosModelForm
 from .models import Libros
 
-# Create your views here.
+
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.list import ListView
+from biblioteca.multiSlugs import claseslug
+
+from django.db.models import Q
+from django.shortcuts import render_to_response
+
 
 def home(request):
 
@@ -14,14 +22,42 @@ def home(request):
     template='home.html'
     return render(request,template,context)
 
-class LibrosListView(ListView):
+#Clase para agegar Libros
+class AgregarNuevoLibro(CreateView):
+
+    model = Libros
+
+    form_class = LibrosModelForm
+    success_url = "/libros/crear/"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(AgregarNuevoLibro, self).get_context_data(*args, **kwargs)
+        context["submit_btn"]="Guardar"
+        return context
+
+#Clase para lista de Libros
+class ListaLibros(ListView):
+
     model = Libros
 
     def get_queryset(self, *args, **kwargs):
-        setentencia = super(LibrosListView, self).get_queryset(**kwargs)
-        return sentencia
+        qs = super(ListaLibros, self).get_queryset(**kwargs)
+        return qs
 
-class LibrosDetailView(DetailView):
+#Clase para actualizar libros
+class ActualizarLibro(UpdateView):
+    model = Libros
+
+    form_class = LibrosModelForm
+    success_url = "/libros/lista/"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ActualizarLibro, self).get_context_data(*args, **kwargs)
+        context["submit_btn"]="Editar"
+        return context
+
+#Detalle de Libros
+class DetalledeLibro(DetailView,claseslug):
     model = Libros
 
 

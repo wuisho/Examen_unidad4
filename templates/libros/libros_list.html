@@ -2,20 +2,19 @@
 
 {%block content%}
 
-  {%for Libros in object_list%}
-    <td>Libros.Nombre</td>
+  {%for Libros in libros%}
+  <tr>
+    <td>{{Libros.Autor}}</td>
 
-    <td>Libros.Autor</td>
+    <td>{{Libros.ISBN}}</td>
 
-    <td>Libros.Editorial</td>
+    <td>{{Libros.Precio}}</td>
 
-    <td>Libros.ISBN</td>
-
-    <td>Libros.Precio</td>
+    <td>{{Libros.Editorial}}</td>
+  </tr>
   {%empty%}
     <h1>No hay libros en existencia!</h1>
 
   {%endfor%}
-
 
 {%endblock %}
